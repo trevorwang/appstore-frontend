@@ -17,37 +17,33 @@
     <main>
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            <img src="/public/v.png" alt="Vuetify.js" class="mb-5" />
-            <blockquote>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
+          <v-layout column>
+
+            <v-list two-line>
+              <template v-for="item in apps">
+                <v-list-tile avatar v-bind:key="item.name" download>
+                  <v-list-tile-avatar>
+                    <img v-bind:src="'http://localhost:1337/version/'+item.versions.slice(-1)[0].id+'/icon'">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="item.name"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="item.platform"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </template>
+            </v-list>
           </v-layout>
         </v-slide-y-transition>
       </v-container>
     </main>
-    <v-navigation-drawer temporary :right="right" v-model="rightDrawer">
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed">
+    <v-footer :fixed="fixed ">
       <span>&copy; 2017</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -55,13 +51,33 @@ export default {
       drawer: true,
       fixed: false,
       items: [
-        { icon: 'bubble_chart', title: 'Inspire' }
+        {
+          icon: 'bubble_chart',
+          title: 'Inspire'
+        }
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Vuetify.js',
+      apps: []
     }
+  },
+  created() {
+    axios.get(`http://localhost:1337/app`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.apps = response.data;
+      })
+      .catch(e => {
+        console.error(e);
+      })
+
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
   }
 }
 </script>
