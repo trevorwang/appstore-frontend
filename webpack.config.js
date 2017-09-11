@@ -16,13 +16,11 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
-          },
+          loaders: {},
           include: [
             path.resolve(__dirname, './src'),
             path.resolve(__dirname, './node_modules/vuetify')
@@ -53,6 +51,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    host: "0.0.0.0",
     noInfo: true
   },
   performance: {
