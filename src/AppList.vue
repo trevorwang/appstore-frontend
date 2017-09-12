@@ -3,8 +3,8 @@
         <v-layout column>
             <v-list two-line>
                 <template v-for="(item, index) in apps">
-                    <a :href="'#/app/' + item.id">
-                        <v-list-tile avatar v-bind:key="item.name" @click="">
+                    <router-link :to="'/app/' + item.id" :key="item.id">
+                        <v-list-tile avatar v-bind:key="item.name">
                             <v-list-tile-avatar>
                                 <img v-bind:src="'http://localhost:1337/version/'+item.versions.slice(-1)[0].id+'/icon'">
                             </v-list-tile-avatar>
@@ -13,7 +13,7 @@
                                 <v-list-tile-sub-title v-html="item.platform"></v-list-tile-sub-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                    </a>
+                    </router-link>
                     <v-divider v-if="index + 1 < apps.length" :key="index"></v-divider>
                 </template>
             </v-list>
