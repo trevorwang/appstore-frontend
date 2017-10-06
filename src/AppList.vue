@@ -6,7 +6,7 @@
                     <router-link :to="'/app/' + item.id" :key="item.id">
                         <v-list-tile avatar v-bind:key="item.name">
                             <v-list-tile-avatar>
-                                <img v-bind:src="'http://localhost:1337/version/'+item.versions.slice(-1)[0].id+'/icon'">
+                                <img v-bind:src="'https://nativeappstorage.blob.core.windows.net/'+item.versions.slice(-1)[0].icon">
                             </v-list-tile-avatar>
                             <v-list-tile-content>
                                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
@@ -24,12 +24,12 @@
 <script>
 import axios from 'axios';
 export default {
-    data() {
+    data () {
         return {
             apps: []
         }
     },
-    created() {
+    created () {
         axios.get(`http://localhost:1337/app`)
             .then(response => {
                 this.apps = response.data;

@@ -4,7 +4,7 @@
             <v-container fluid grid-list-lg>
                 <v-layout column>
                     <v-flex text-xs-center>
-                        <v-card-media :src="'http://localhost:1337/version/' + app.versions.slice(-1)[0].id + '/icon'" height="125px" contain></v-card-media>
+                        <v-card-media :src="'https://nativeappstorage.blob.core.windows.net/' + app.versions.slice(-1)[0].icon" height="125px" contain></v-card-media>
                     </v-flex>
                     <v-list two-line>
                         <v-list-tile>
@@ -43,7 +43,7 @@
                         </v-list-tile>
                         <v-divider></v-divider>
                         <v-list-tile>
-                            <a :href="'http://localhost:1337/version/' + app.versions.slice(-1)[0].id + '/download'">
+                            <a :href="'https://nativeappstorage.blob.core.windows.net/' + app.versions.slice(-1)[0].fd">
                                 <v-list-tile-content>
                                     <v-list-tile-title>Download</v-list-tile-title>
                                 </v-list-tile-content>
@@ -61,12 +61,12 @@ import axios from 'axios'
 import moment from 'moment'
 export default {
     props: ['id'],
-    data() {
+    data () {
         return {
             app: {},
         }
     },
-    created() {
+    created () {
         console.log(this);
         this.fetchData(this.$props.id)
     },
@@ -81,18 +81,18 @@ export default {
         }
     },
     methods: {
-        bytesToSize(bytes) {
+        bytesToSize (bytes) {
             var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
             if (bytes == 0) return 'n/a';
             var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
         },
 
-        formatDate(date) {
+        formatDate (date) {
             return moment(date).format("DD MMM YYYY hh:mm:ss")
         },
 
-        fetchData(id) {
+        fetchData (id) {
             axios.get('http://localhost:1337/app/' + id)
                 .then(response => {
                     this.app = response.data;
