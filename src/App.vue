@@ -34,7 +34,7 @@ import axios from 'axios';
 import Vue from 'vue'
 
 export default {
-  data() {
+  data () {
     return {
       clipped: false,
       drawer: true,
@@ -45,7 +45,7 @@ export default {
           title: 'Inspire'
         }
       ],
-      title: 'Vuetify.js',
+      title: 'AppStore',
     }
   }
 }
