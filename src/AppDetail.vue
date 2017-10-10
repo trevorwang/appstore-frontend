@@ -1,6 +1,6 @@
 <template>
     <v-slide-y-transition mode="out-in">
-        <v-card class="cyan primary white--text">
+        <v-card class="cyan primary white--text" v-if="app.versions">
             <v-container fluid grid-list-lg>
                 <v-layout column>
                     <v-flex text-xs-center>
@@ -68,17 +68,11 @@ export default {
     },
     created () {
         console.log(this);
-        this.fetchData(this.$props.id)
+        this.fetchData()
     },
     watch: {
-        id: (val, oldValue) => {
-            if (val !== oldValue) {
-                console.log("value changed to " + val)
-                console.log(this.$props)
-                console.log(this.default.methods.fetchData)
-                this.default.methods.fetchData(val)
-            }
-        }
+        // call again the method if the route changes
+        '$route': 'fetchData'
     },
     methods: {
         bytesToSize (bytes) {
@@ -92,8 +86,8 @@ export default {
             return moment(date).format("DD MMM YYYY hh:mm:ss")
         },
 
-        fetchData (id) {
-            axios.get('http://localhost:1337/app/' + id)
+        fetchData () {
+            axios.get('http://localhost:1337/app/' + this.$props.id)
                 .then(response => {
                     this.app = response.data;
                     console.log(this.app)

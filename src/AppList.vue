@@ -22,7 +22,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+import ua from 'ua-parser-js'
 export default {
     data () {
         return {
@@ -30,12 +31,18 @@ export default {
         }
     },
     created () {
-        axios.get(`http://localhost:1337/app`)
+        var filter = ''
+        const platforms = ['ios', 'android']
+        var os = ua().os.name.toLowerCase()
+        if (platforms.indexOf(os) != -1) {
+            filter = 'platform=' + os
+        }
+        axios.get(`http://localhost:1337/app?` + filter)
             .then(response => {
-                this.apps = response.data;
+                this.apps = response.data
             })
             .catch(e => {
-                console.error(e);
+                console.error(e)
             })
     }
 }
