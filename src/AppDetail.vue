@@ -4,7 +4,7 @@
             <v-container fluid grid-list-lg>
                 <v-layout column>
                     <v-flex text-xs-center>
-                        <v-card-media :src="'https://nativeappstorage.blob.core.windows.net/' + app.versions.slice(-1)[0].icon" height="125px" contain></v-card-media>
+                        <v-card-media :src="app.versions.slice(-1)[0].icon" height="125px" contain></v-card-media>
                     </v-flex>
                     <v-list two-line>
                         <v-list-tile>
@@ -43,7 +43,12 @@
                         </v-list-tile>
                         <v-divider></v-divider>
                         <v-list-tile>
-                            <a :href="'https://nativeappstorage.blob.core.windows.net/' + app.versions.slice(-1)[0].fd">
+                            <a :href="app.versions.slice(-1)[0].fd" v-if="app.versions.slice(-1)[0].platform == 'android'">
+                                <v-list-tile-content>
+                                    <v-list-tile-title>Download</v-list-tile-title>
+                                </v-list-tile-content>
+                            </a>
+                            <a :href="'itms-services://?action=download-manifest&url='+app.versions.slice(-1)[0].plist" v-else>
                                 <v-list-tile-content>
                                     <v-list-tile-title>Download</v-list-tile-title>
                                 </v-list-tile-content>

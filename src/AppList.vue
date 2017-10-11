@@ -6,7 +6,7 @@
                     <router-link :to="'/app/' + item.id" :key="item.id">
                         <v-list-tile avatar v-bind:key="item.name">
                             <v-list-tile-avatar>
-                                <img v-bind:src="'https://nativeappstorage.blob.core.windows.net/'+item.versions.slice(-1)[0].icon">
+                                <img v-bind:src="item.versions.slice(-1)[0].icon">
                             </v-list-tile-avatar>
                             <v-list-tile-content>
                                 <v-list-tile-title v-html="item.name"></v-list-tile-title>
